@@ -5,7 +5,7 @@
         upgrade: dist
         autoremove: true
       become: true
-    - name: Add public SSH key for the Ansible user
+    - name: Add public SSH key for the Madalynn user
       authorized_key:
         user: madalynn
         key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJEXrziuUOCpWPvwOsGuF4K+aq1ufToGMi4ra/1omOZb
