@@ -6,6 +6,7 @@
             "username": "{{user `username`}}",
             "password": "{{user `password`}}",
             "node": "proxmox",
+            "vm_id": 100,
             "network_adapters": [
                 {
                     "bridge": "vmbr0"
