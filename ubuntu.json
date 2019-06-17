@@ -3,10 +3,10 @@
         {
             "type": "proxmox",
             "proxmox_url": "https://proxmox.madalynn.xyz:8006/api2/json",
-            "username": "{{user `username`}}",
-            "password": "{{user `password`}}",
+            "username": "{{ user `username` }}",
+            "password": "{{ user `password` }}",
             "node": "proxmox",
-            "vm_id": 100,
+            "vm_id": 200,
             "network_adapters": [
                 {
                     "bridge": "vmbr0"
@@ -40,7 +40,7 @@
     "provisioners": [
         {
             "type": "shell",
-            "execute_command": "echo 'madalynn' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+            "execute_command": "echo 'madalynn' | {{ .Vars }} sudo -S -E bash '{{ .Path }}'",
             "script": "scripts/setup.sh"
         },
         {
