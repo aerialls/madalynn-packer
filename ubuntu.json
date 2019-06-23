@@ -1,4 +1,9 @@
 {
+    "variables": {
+        "vm_id": "200",
+        "ubuntu_iso_file": "ubuntu-18.04.2-server-amd64.iso",
+        "template_name": "ubuntu-18.04"
+    },
     "builders": [
         {
             "type": "proxmox",
@@ -6,7 +11,7 @@
             "username": "{{ user `username` }}",
             "password": "{{ user `password` }}",
             "node": "proxmox",
-            "vm_id": 200,
+            "vm_id": "{{ user `vm_id` }}",
             "network_adapters": [
                 {
                     "bridge": "vmbr0"
@@ -20,9 +25,9 @@
                     "storage_pool_type": "lvm"
                 }
             ],
-            "iso_file": "local:iso/ubuntu-18.04.2-server-amd64.iso",
+            "iso_file": "local:iso/{{ user `ubuntu_iso_file` }}",
             "unmount_iso": true,
-            "template_name": "ubuntu-18.04",
+            "template_name": "{{ user `template_name` }}",
             "http_directory": "config",
             "boot_command": [
                 "<esc><wait><esc><wait><enter><wait>",
