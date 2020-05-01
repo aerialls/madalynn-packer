@@ -1,0 +1,44 @@
+{
+  "variables": {
+    "proxmox_vm_id": "200",
+    "proxmox_template_name": "ubuntu-20.04",
+    "ubuntu_iso_file": "ubuntu-20.04-live-server-amd64.iso"
+  },
+  "builders": [{
+    "type": "proxmox",
+    "proxmox_url": "https://proxmox.madalynn.xyz/api2/json",
+    "username": "{{ user `proxmox_username` }}",
+    "password": "{{ user `proxmox_password` }}",
+    "node": "proxmox",
+    "vm_id": "{{ user `proxmox_vm_id` }}",
+    "network_adapters": [{
+      "bridge": "vmbr0"
+    }],
+    "disks": [{
+      "type": "scsi",
+      "disk_size": "20G",
+      "storage_pool": "local-lvm",
+      "storage_pool_type": "lvm"
+    }],
+    "iso_file": "local:iso/{{ user `ubuntu_iso_file` }}",
+    "unmount_iso": true,
+    "boot_wait": "5s",
+    "memory": 1024,
+    "template_name": "{{ user `proxmox_template_name` }}",
+    "http_directory": "http",
+    "boot_command": [
+      "<esc><wait><esc><wait><f6><wait><esc><wait>",
+      "<bs><bs><bs><bs><bs>",
+      "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
+      "--- <enter>"
+    ],
+    "ssh_username": "madalynn",
+    "ssh_password": "madalynn"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+    ]
+  }]
+}

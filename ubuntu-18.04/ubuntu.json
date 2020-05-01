@@ -1,0 +1,47 @@
+{
+  "variables": {
+    "proxmox_vm_id": "200",
+    "proxmox_template_name": "ubuntu-18.04",
+    "ubuntu_iso_file": "ubuntu-18.04.2-server-amd64.iso"
+  },
+  "builders": [{
+    "type": "proxmox",
+    "proxmox_url": "https://proxmox.madalynn.xyz/api2/json",
+    "username": "{{ user `proxmox_username` }}",
+    "password": "{{ user `proxmox_password` }}",
+    "node": "proxmox",
+    "vm_id": "{{ user `proxmox_vm_id` }}",
+    "network_adapters": [{
+      "bridge": "vmbr0"
+    }],
+    "disks": [{
+      "type": "scsi",
+      "disk_size": "20G",
+      "storage_pool": "local-lvm",
+      "storage_pool_type": "lvm"
+    }],
+    "iso_file": "local:iso/{{ user `ubuntu_iso_file` }}",
+    "unmount_iso": true,
+    "template_name": "{{ user `proxmox_template_name` }}",
+    "http_directory": "config",
+    "boot_command": [
+      "<esc><wait><esc><wait><enter><wait>",
+      "/install/vmlinuz ",
+      "initrd=/install/initrd.gz ",
+      "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+      "auto=true ",
+      "priority=critical ",
+      "-- <enter>"
+    ],
+    "ssh_username": "madalynn",
+    "ssh_password": "madalynn"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "execute_command": "echo 'madalynn' | {{ .Vars }} sudo -S -E bash '{{ .Path }}'",
+    "script": "scripts/setup.sh"
+  }, {
+    "type": "ansible",
+    "playbook_file": "./ansible/provisioning.yml"
+  }]
+}
