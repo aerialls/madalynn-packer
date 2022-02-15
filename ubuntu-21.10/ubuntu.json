@@ -1,8 +1,8 @@
 {
   "variables": {
     "proxmox_vm_id": "200",
-    "proxmox_template_name": "ubuntu-20.04",
-    "ubuntu_iso_file": "ubuntu-20.04.3-live-server-amd64.iso"
+    "proxmox_template_name": "ubuntu-21.10",
+    "ubuntu_iso_file": "ubuntu-21.10-live-server-amd64.iso"
   },
   "builders": [{
     "type": "proxmox",
@@ -27,10 +27,11 @@
     "template_name": "{{ user `proxmox_template_name` }}",
     "http_directory": "http",
     "boot_command": [
-      "<esc><wait><esc><wait><f6><wait><esc><wait>",
-      "<bs><bs><bs><bs><bs>",
-      "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
-      "--- <enter>"
+      "c",
+      "linux /casper/vmlinuz --- autoinstall ds='nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ",
+      "<enter><wait>",
+      "initrd /casper/initrd<enter><wait>",
+      "boot<enter>"
     ],
     "ssh_username": "madalynn",
     "ssh_password": "madalynn",

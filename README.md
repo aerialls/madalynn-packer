@@ -30,6 +30,6 @@ You will need a `secrets.json` file like the following.
 {
   "proxmox_vm_id": "201",
   "proxmox_template_name": "ubuntu-20.04",
-  "ubuntu_iso_file": "ubuntu-20.04-live-server-amd64.iso"
+  "ubuntu_iso_file": "ubuntu-20.04.3-live-server-amd64.iso"
 }
 ```
