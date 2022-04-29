@@ -1,8 +1,8 @@
 {
   "variables": {
     "proxmox_vm_id": "200",
-    "proxmox_template_name": "ubuntu-21.10",
-    "ubuntu_iso_file": "ubuntu-21.10-live-server-amd64.iso"
+    "proxmox_template_name": "ubuntu-22.04",
+    "ubuntu_iso_file": "ubuntu-22.04-live-server-amd64.iso"
   },
   "builders": [{
     "type": "proxmox",

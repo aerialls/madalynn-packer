@@ -2,7 +2,7 @@
   "variables": {
     "proxmox_vm_id": "200",
     "proxmox_template_name": "ubuntu-18.04",
-    "ubuntu_iso_file": "ubuntu-18.04.2-server-amd64.iso"
+    "ubuntu_iso_file": "ubuntu-18.04.6-server-amd64.iso"
   },
   "builders": [{
     "type": "proxmox",
